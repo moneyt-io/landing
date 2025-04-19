@@ -1,3 +1,12 @@
 @import 'tailwindcss';
-@plugin '@tailwindcss/forms';
-@plugin '@tailwindcss/typography';
+
+@theme {
+  --color-primary: #22D3EE; /* Turquesa */
+  --color-white: #FFFFFF;
+  --color-black: #000000;
+  /* Puedes añadir otros colores aquí si es necesario */
+  /* --color-brand-green: #34D399; */
+  /* --color-brand-dark: #374151; */
+}
+
+/* Estilos globales personalizados pueden ir aquí si es necesario */
