@@ -3,10 +3,10 @@
 	
 	// Métricas ficticias para mostrar el éxito del producto
 	const stats = {
-		users: '50,000+',
-		countries: '120+',
-		transactions: '1.2M+',
-		rating: '4.8'
+		users: '0+',
+		countries: '0+',
+		transactions: '0M+',
+		rating: '5'
 	};
 	
 	// Datos sobre plataformas soportadas
@@ -22,7 +22,7 @@
 </script>
 
 <svelte:head>
-	<title>Download MoneyT | Personal Finance App for Mobile and Web</title>
+	<title>Download | App for Mobile and Web</title>
 	<meta name="description" content="Download the MoneyT app for iOS, Android, or access our web app for complete control of your personal finances." />
 </svelte:head>
 

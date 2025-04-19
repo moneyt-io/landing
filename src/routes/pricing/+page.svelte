@@ -87,7 +87,7 @@
 </script>
 
 <svelte:head>
-    <title>MoneyT Pricing - Plans for Every Need</title>
+    <title>Pricing | Plans for Everyone</title>
     <meta name="description" content="Choose the right MoneyT plan for your financial management needs - Free, Cloud, or Dev with flexible pricing options." />
 </svelte:head>
 

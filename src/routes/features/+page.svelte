@@ -110,7 +110,7 @@
 </script>
 
 <svelte:head>
-    <title>Features | MoneyT - Advanced Personal Finance Tools</title>
+    <title>Features | Powerful Features</title>
     <meta name="description" content="Explore MoneyT's comprehensive financial management features, from expense tracking to investments, multi-currency support, and AI-powered analytics." />
 </svelte:head>
 

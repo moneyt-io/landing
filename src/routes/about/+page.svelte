@@ -58,7 +58,7 @@
 </script>
 
 <svelte:head>
-    <title>About MoneyT | Our Mission, Values & Story</title>
+    <title>About | Our Mission, Values & Story</title>
     <meta name="description" content="Learn about MoneyT's mission to simplify personal finance management through robust, intuitive, and accessible tools built in public." />
 </svelte:head>
 
