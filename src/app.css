@@ -1,12 +1,25 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-primary: #22D3EE; /* Turquesa */
-  --color-white: #FFFFFF;
-  --color-black: #000000;
-  /* Puedes añadir otros colores aquí si es necesario */
-  /* --color-brand-green: #34D399; */
-  /* --color-brand-dark: #374151; */
+  /* Colores principales basados en la imagen */
+  --color-primary: #4AE3B5; /* Verde-turquesa brillante (color predominante del logo) */
+  --color-primary-dark: #10795E; /* Verde-turquesa oscuro (para hover y el punto inferior) */
+  
+  /* Colores estructurales */
+  --color-white: #FFFFFF; /* Para header y fondo de página */
+  --color-black: #0F172A; /* Para footer y elementos de contraste */
+  
+  /* Escala de grises simplificada */
+  --color-gray-100: #F3F4F6; /* Para secciones alternantes */
+  --color-gray-300: #D1D5DB; /* Para bordes y separadores */
+  --color-gray-500: #6B7280; /* Para textos secundarios */
+  --color-gray-700: #374151; /* Para textos principales */
+  
+  /* Alias funcionales */
+  --color-text: var(--color-gray-700); /* Color de texto principal */
+  --color-text-light: var(--color-gray-500); /* Color de texto secundario */
+  --color-background: var(--color-white); /* Fondo principal */
+  --color-footer: var(--color-black); /* Fondo del footer */
 }
 
 /* Estilos globales personalizados pueden ir aquí si es necesario */
