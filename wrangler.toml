@@ -1,0 +1,11 @@
+name = "moneyt-landing"
+compatibility_date = "2024-04-19"
+
+[site]
+bucket = "./build"
+
+# Configuración de rutas personalizadas para SPA
+[[routes]]
+pattern = "/*"
+script = null
+dest = "/index.html"
