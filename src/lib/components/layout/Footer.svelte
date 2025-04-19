@@ -1,13 +1,16 @@
 <script lang="ts">
 	import Logo from '$lib/components/common/Logo.svelte';
+	import NewsletterSubscribe from '$lib/components/common/NewsletterSubscribe.svelte';
+	
 	const currentYear = new Date().getFullYear();
 	
+	// Variables para el formulario de suscripción
 	let email = '';
-	const handleSubmit = () => {
-		if (email) {
-			alert('Gracias por suscribirte!');
-			email = '';
-		}
+	let isSubmitting = false;
+	let subscribeStatus = {
+		success: false,
+		error: false,
+		message: ''
 	};
 </script>
 
@@ -83,23 +86,11 @@
 				<div class="w-10 h-0.5 bg-primary rounded-full"></div>
 				<p class="mt-6 text-sm text-gray-300">Get notified about new features and updates.</p>
 				
-				<form class="mt-4 sm:flex" on:submit|preventDefault={handleSubmit}>
-					<div class="relative rounded-md shadow-sm w-full">
-						<input 
-							type="email" 
-							bind:value={email}
-							placeholder="Email address" 
-							class="w-full px-4 py-3 bg-gray-700/50 backdrop-blur border border-gray-700 rounded-l-md focus:ring-1 focus:ring-primary focus:border-primary text-white placeholder-gray-500 text-sm"
-							required 
-						/>
-					</div>
-					<button 
-						type="submit" 
-						class="mt-3 sm:mt-0 w-full sm:w-auto flex-shrink-0 bg-primary text-white hover:bg-primary-dark px-4 py-3 rounded-r-md text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary focus:ring-offset-footer"
-					>
-						Subscribe
-					</button>
-				</form>
+				<NewsletterSubscribe
+					bind:email
+					bind:isSubmitting
+					bind:subscribeStatus
+				/>
 			</div>
 		</div>
 		

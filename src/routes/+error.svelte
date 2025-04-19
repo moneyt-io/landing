@@ -7,8 +7,8 @@
         const errorSection = document.getElementById('error-section');
         if (errorSection) {
             // Reducido a un valor más razonable
-            const headerHeight = 20; 
-            errorSection.style.marginTop = `${headerHeight + 20}px`; // Mucho menos espacio adicional
+            const headerHeight = 0; 
+            errorSection.style.marginTop = `${headerHeight + 10}px`; // Mucho menos espacio adicional
         }
     });
 </script>

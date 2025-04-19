@@ -4,7 +4,7 @@
 </script>
 
 <svelte:head>
-    <title>Privacy Policy - MoneyT</title>
+    <title>Privacy | Privacy Policy MoneyT</title>
     <meta name="description" content="MoneyT's Privacy Policy" />
 </svelte:head>
 

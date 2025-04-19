@@ -23,7 +23,7 @@
         'Other'
     ];
     
-    // Función para manejar el envío del formulario
+    // Función para manejar el envío del formulario - Actualizada para usar Formspree
     async function handleSubmit() {
         isSubmitting = true;
         submitStatus = {
@@ -32,30 +32,48 @@
             message: ''
         };
         
-        // Simulación de envío de formulario (reemplazar con lógica real)
         try {
-            // Aquí iría la integración con tu backend o servicio de correo
-            await new Promise(resolve => setTimeout(resolve, 1500));
+            // Envío real a Formspree
+            const response = await fetch('https://formspree.io/f/xqaprqjp', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name,
+                    email,
+                    subject,
+                    message
+                })
+            });
             
-            // Simulación de éxito
-            submitStatus = {
-                success: true,
-                error: false,
-                message: 'Your message has been sent! We\'ll get back to you soon.'
-            };
+            const data = await response.json();
             
-            // Resetear el formulario después del éxito
-            name = '';
-            email = '';
-            subject = '';
-            message = '';
-            
+            if (response.ok) {
+                // Éxito real
+                submitStatus = {
+                    success: true,
+                    error: false,
+                    message: 'Your message has been sent! We\'ll get back to you soon.'
+                };
+                
+                // Resetear el formulario después del éxito
+                name = '';
+                email = '';
+                subject = '';
+                message = '';
+            } else {
+                // Error del servidor - usar mensaje de Formspree o uno genérico
+                throw new Error(data.error || 'There was a problem submitting your form');
+            }
         } catch (error) {
             // Manejo de error
+            console.error('Contact form error:', error);
             submitStatus = {
                 success: false,
                 error: true,
-                message: 'There was an error sending your message. Please try again later.'
+                message: error instanceof Error ? error.message : 'There was an error sending your message. Please try again later.'
             };
         } finally {
             isSubmitting = false;
@@ -80,7 +98,7 @@
 </script>
 
 <svelte:head>
-    <title>Contact Us | MoneyT</title>
+    <title>Contact Us | Have questions, feedback, or need assistance?</title>
     <meta name="description" content="Get in touch with the MoneyT team for support, partnership inquiries, or any questions about our personal finance app." />
 </svelte:head>
 
@@ -99,36 +117,6 @@
             <div class="grid md:grid-cols-5 gap-8">
                 <!-- Contact Form - 3 columns wide -->
                 <div class="md:col-span-3 bg-white p-8 rounded-xl shadow-sm">
-                    {#if submitStatus.success}
-                        <div class="bg-green-50 border-l-4 border-green-500 p-4 mb-6">
-                            <div class="flex">
-                                <div class="flex-shrink-0">
-                                    <svg class="h-5 w-5 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                                    </svg>
-                                </div>
-                                <div class="ml-3">
-                                    <p class="text-sm text-green-700">{submitStatus.message}</p>
-                                </div>
-                            </div>
-                        </div>
-                    {/if}
-                    
-                    {#if submitStatus.error}
-                        <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-6">
-                            <div class="flex">
-                                <div class="flex-shrink-0">
-                                    <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
-                                    </svg>
-                                </div>
-                                <div class="ml-3">
-                                    <p class="text-sm text-red-700">{submitStatus.message}</p>
-                                </div>
-                            </div>
-                        </div>
-                    {/if}
-                    
                     <h2 class="text-2xl font-bold mb-6 text-text">Contact Form</h2>
                     
                     <form on:submit|preventDefault={handleSubmit} class="space-y-6">
@@ -139,6 +127,7 @@
                                 <input
                                     type="text"
                                     id="name"
+                                    name="name"
                                     bind:value={name}
                                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
                                     placeholder="Your name"
@@ -152,6 +141,7 @@
                                 <input
                                     type="email"
                                     id="email"
+                                    name="email"
                                     bind:value={email}
                                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
                                     placeholder="your.email@example.com"
@@ -165,6 +155,7 @@
                             <label for="subject" class="block text-sm font-medium text-text-light mb-1">Subject</label>
                             <select
                                 id="subject"
+                                name="subject"
                                 bind:value={subject}
                                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
                                 required
@@ -181,12 +172,18 @@
                             <label for="message" class="block text-sm font-medium text-text-light mb-1">Message</label>
                             <textarea
                                 id="message"
+                                name="message"
                                 bind:value={message}
                                 rows="5"
                                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
                                 placeholder="Your message..."
                                 required
                             ></textarea>
+                        </div>
+                        
+                        <!-- Anti-spam honeypot field (invisible to users but fools bots) -->
+                        <div class="hidden">
+                            <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" />
                         </div>
                         
                         <!-- Submit button -->
@@ -208,6 +205,37 @@
                             </button>
                         </div>
                     </form>
+                    
+                    <!-- Mensajes de estado - Movidos debajo del formulario -->
+                    {#if submitStatus.success}
+                        <div class="mt-6 bg-green-50 border-l-4 border-green-500 p-4">
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                    <svg class="h-5 w-5 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-sm text-green-700">{submitStatus.message}</p>
+                                </div>
+                            </div>
+                        </div>
+                    {/if}
+                    
+                    {#if submitStatus.error}
+                        <div class="mt-6 bg-red-50 border-l-4 border-red-500 p-4">
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                    <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-sm text-red-700">{submitStatus.message}</p>
+                                </div>
+                            </div>
+                        </div>
+                    {/if}
                 </div>
                 
                 <!-- Contact Info - 2 columns wide -->
