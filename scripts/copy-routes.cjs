@@ -5,13 +5,19 @@ const routesConfig = {
   "version": 1,
   "include": ["/*"],
   "exclude": [
-    "/build/_assets/*",
+    "/_assets/*",
     "/*.ico",
     "/*.svg", 
     "/*.png",
     "/*.jpg",
     "/*.jpeg", 
     "/*.gif"
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
   ]
 };
 
